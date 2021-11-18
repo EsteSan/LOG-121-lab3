@@ -19,6 +19,7 @@ public class TroisiemeVue extends JPanel{
         setBounds(X,Y,LARGEUR,HAUTEUR);
         setBackground(COLOR);
         setVisible(true);
+        setBorder(BorderFactory.createTitledBorder("VUE_STATIQUE"));
     }
 }
 
