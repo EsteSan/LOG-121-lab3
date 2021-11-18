@@ -17,7 +17,7 @@ public class Menu extends JMenuBar {
     private static final int Y = 0;
     private static final Dimension DIMENSION=new Dimension(1400,30);
     private static final String MENU_FICHIER_TITRE = "Fichier";
-    private static final String MENU_FICHIER_NOUVELLE_IMAGE = "Nouvelle Image";
+    private static final String MENU_FICHIER_NOUVELLE_IMAGE = "Nouvelle Modele.Image";
     private static final String MENU_FICHIER_SAUVEGARDER = "Sauvegarder";
     private static final String MENU_FICHIER_CHARGER = "Charger";
     private static final String MENU_COMMANDE_TITRE = "Commande";
