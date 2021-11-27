@@ -1,16 +1,23 @@
 package EnvironnementGraphique;
 
+import Vues.DeuxiemeVue;
+import Vues.PremiereVue;
+import Vues.TroisiemeVue;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
+
+import Modele.Image2;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.File;
+import java.io.*;
 import javax.swing.filechooser.FileFilter;
 
 public class Menu extends JMenuBar {
     /**
-     * CrÃ©ation de la barre de menu et de ses Ã©lÃ©ments
+     * Création de la barre de menu et de ses éléments
      */
     //Attributs
     private static final int X = 0;
@@ -23,42 +30,48 @@ public class Menu extends JMenuBar {
     private static final String MENU_COMMANDE_TITRE = "Commande";
     private static final String MENU_COMMANDE_UNDO = "Undo";
     private static final String MENU_COMMANDE_REDO = "Redo";
+    Image2 image2;
 
-    public Menu(JFrame frame){
+    public Menu(JFrame frame, PremiereVue vue1, DeuxiemeVue vue2, TroisiemeVue vue3){
 
         setAlignmentX(0);
         setAlignmentY(0);
         setSize(DIMENSION);
-        ajouterMenuFichier(frame);
+        ajouterMenuFichier(frame,vue1,vue2,vue3);
         ajouterMenuCommande();
 
     }
 
     /**
-     * CrÃ©ation du menu fichier
+     * Création du menu fichier
      * @param frame
      */
-    private void ajouterMenuFichier(JFrame frame){
+    private void ajouterMenuFichier(JFrame frame,PremiereVue vue1, DeuxiemeVue vue2, TroisiemeVue vue3){
         JMenu menuFichier = new JMenu(MENU_FICHIER_TITRE);
         JMenuItem nouvelleImage = new JMenuItem(MENU_FICHIER_NOUVELLE_IMAGE);
         JMenuItem sauvegarder = new JMenuItem(MENU_FICHIER_SAUVEGARDER);
         JMenuItem charger = new JMenuItem(MENU_FICHIER_CHARGER);
         JFileChooser fileChooser =new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         /**
-         * POUR CHARGER UNE IMAGE
+         * POUR INSÉRER UNE NOUVELLE IMAGE
          */
         nouvelleImage.addActionListener((ActionEvent e)->{
-
+        
+            ImageIcon image;
             fileChooser.setDialogTitle("Choisissez une image");
             fileChooser.setAcceptAllFileFilterUsed(false);
-            //CrÃ©ation d'un filtre
-            FileNameExtensionFilter filtre = new FileNameExtensionFilter(".jpeg", "jpeg");
+            //Création d'un filtre
+            FileNameExtensionFilter filtre = new FileNameExtensionFilter(".jpg", "jpg");
             fileChooser.addChoosableFileFilter(filtre);
 
             int returnValue = fileChooser.showOpenDialog(null);
             if (returnValue == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
-                System.out.println(selectedFile.getAbsolutePath());
+                image = new ImageIcon(selectedFile.getAbsolutePath());
+                 image2 = new Image2(selectedFile.getAbsolutePath());
+                vue1.addImage(image2);
+                vue2.addImage(image2);
+                vue3.addImage(image2);
             }
         });
 
@@ -67,6 +80,16 @@ public class Menu extends JMenuBar {
          */
         sauvegarder.addActionListener((ActionEvent e) ->{
             fileChooser.setDialogTitle("Sauvegarder");
+            //Sérialisation
+            try {
+                FileOutputStream fileOut= new FileOutputStream("C:\\Users\\Public\\Sauvegarde.ser");
+                ObjectOutputStream out= new ObjectOutputStream(fileOut);
+                out.writeObject(frame);
+                out.close();
+                fileOut.close();
+            }  catch (IOException i) {
+                i.printStackTrace();
+            }
             int returnValue = fileChooser.showSaveDialog(frame);
             if (returnValue == JFileChooser.APPROVE_OPTION) {
                 File fileToSave = fileChooser.getSelectedFile();
@@ -78,10 +101,25 @@ public class Menu extends JMenuBar {
          * POUR CHARGER
          */
         charger.addActionListener((ActionEvent e) ->{
-            fileChooser.setDialogTitle("Veuillez charger un fichier");
+            /*fileChooser.setDialogTitle("Charger");
+            //Dérialisation
+            try {
+                FileInputStream fileIn= new FileInputStream("C:\\Users\\Public\\Sauvegarde.ser");
+                ObjectInputStream out= new ObjectInputStream(fileIn);
+                out.writeObject(frame);
+                out.close();
+                fileOut.close();
+            }  catch (IOException i) {
+                i.printStackTrace();
+            }
+            int returnValue = fileChooser.showSaveDialog(frame);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+                System.out.println("Sauvegarder comme: " + fileToSave.getAbsolutePath());
+            }*/
         });
         /**
-         * ImplÃ©menter les actions listener
+         * Implémenter les actions listener
          */
 
         menuFichier.add(nouvelleImage);
@@ -92,7 +130,7 @@ public class Menu extends JMenuBar {
     }
 
     /**
-     * CrÃ©ation du menu commande
+     * Création du menu commande
      */
     private void ajouterMenuCommande(){
         JMenu menuCommande = new JMenu(MENU_COMMANDE_TITRE);
@@ -100,7 +138,7 @@ public class Menu extends JMenuBar {
         JMenuItem redo = new JMenuItem(MENU_COMMANDE_REDO);
 
         /**
-         * ImplÃ©menter les actions listener
+         * Implémenter les actions listener
          */
 
         menuCommande.add(undo);

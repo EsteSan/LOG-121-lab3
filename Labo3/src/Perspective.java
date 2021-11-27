@@ -1,7 +1,7 @@
-public class Perspective extends Image {
+public class Perspective  {
 
     public Perspective(String pathImage) {
-        super(pathImage);
+        ;
     }
 
     int mulitplicateurZoom;
