@@ -1,6 +1,8 @@
 package Vues;
 
 import Controleur.ControlVueTranslation;
+import Modele.Image2;
+import Modele.ImageLabel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -26,23 +28,20 @@ public class DeuxiemeVue extends JPanel implements java.io.Serializable{
 
     public int px;
     public int py;
-    public JLabel lab;
+    public ImageLabel lab=new ImageLabel();
     public DeuxiemeVue() {
         setBounds(X,Y,LARGEUR,HAUTEUR);
         setBackground(COLOR);
         setVisible(true);
         setBorder(BorderFactory.createTitledBorder("VUE_TRANSLATION"));
-        addMouseMotionListener(new ControlVueTranslation(this));
+        ControlVueTranslation controlVueTranslation=new ControlVueTranslation(this);
+        addMouseListener(controlVueTranslation);
+        addMouseMotionListener(controlVueTranslation);
+        add(lab);
     }
 
 
     public void addImage(ImageIcon image) {
-        lab = new JLabel();
-        add(lab);
-        lab.setSize(300,300);
-        Image img=image.getImage();
-        Image imgScale=img.getScaledInstance(lab.getWidth(),lab.getHeight(),Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon =new ImageIcon(imgScale);
-        lab.setIcon(scaledIcon);
+        lab.setImage(image);
     }
 }

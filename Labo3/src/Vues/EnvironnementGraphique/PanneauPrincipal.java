@@ -1,4 +1,4 @@
-package EnvironnementGraphique;
+package Vues.EnvironnementGraphique;
 
 import javax.swing.*;
 import java.awt.*;

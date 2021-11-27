@@ -5,8 +5,7 @@ import java.awt.*;
 
 public class Zoom implements Operation {
     boolean etat;
-    int modification_x=0;
-    int modification_y=0;
+    private int  modification_x=0, modification_y=0;
     ImageLabel label_to_modify;
 
     public Zoom(ImageLabel label_to_modify) {
@@ -28,11 +27,15 @@ public class Zoom implements Operation {
     //Zoomer
     public void execute(){
         label_to_modify.setSizeImage(label_to_modify.getWidthImage()+modification_x,label_to_modify.getHeightImage()+modification_y);
-        System.out.print("clicl");
     }
 
     @Override
     public void undo() {
+        label_to_modify.setSizeImage(label_to_modify.getWidthImage()-modification_x,label_to_modify.getHeightImage()-modification_y);
+    }
 
+    @Override
+    public void redo() {
+        execute();
     }
 }

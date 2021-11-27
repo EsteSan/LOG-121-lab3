@@ -1,23 +1,19 @@
 package Controleur;
 
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import javax.swing.*;
-import javax.swing.event.MouseInputListener;
-
-import EnvironnementGraphique.Menu;
-import Modele.Translation;
 import Vues.DeuxiemeVue;
-import Vues.PremiereVue;
 
-public class ControlVueTranslation  implements MouseMotionListener {
+public class ControlVueTranslation  implements MouseMotionListener, MouseListener {
 	
 	
 	DeuxiemeVue vue;
-	Translation translation= new Translation();
 	private int px;
 	private int py;
+	private int pressed_x,pressed_y,memento_x,memento_y;
+	private GestionnaireOperation gestionnaireOperation=GestionnaireOperation.getInstance();
 
 	public ControlVueTranslation(DeuxiemeVue p_vue) {
 		
@@ -26,18 +22,15 @@ public class ControlVueTranslation  implements MouseMotionListener {
 
 public void changerPosition() {
 		if(vue!=null && vue.lab!=null){
-			translation.setPosX(px);
-			translation.setPosY(py);
-			translation.execute(vue);
-			vue.lab.repaint();
-			System.out.println("check");
+			gestionnaireOperation.translate(vue.lab,px-pressed_x,py-pressed_y);
+			pressed_y=py;
+			pressed_x=px;
 		}
 }
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		//creer une nouvelle instance de Zoom  pour envoyer au controleur
-		System.out.println("Dragged");
 		px = e.getX();
 		py = e.getY();
 		changerPosition();
@@ -45,6 +38,36 @@ public void changerPosition() {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		pressed_x=e.getX();
+		pressed_y=e.getY();
+		memento_x=pressed_x;
+		memento_y=pressed_y;
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		pressed_x=e.getX();
+		pressed_y=e.getY();
+		gestionnaireOperation.addTranslation(vue.lab,pressed_x-memento_x,pressed_y-memento_y);
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
 
 	}
 }

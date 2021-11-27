@@ -51,4 +51,9 @@ public class ImageLabel extends JLabel {
         setIcon(scaledIcon);
         repaint();
     }
+
+    public void setImage(ImageIcon imageIcon) {
+        Image image=imageIcon.getImage();
+        setImage(image);
+    }
 }

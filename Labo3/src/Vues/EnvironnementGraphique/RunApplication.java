@@ -1,10 +1,6 @@
-package EnvironnementGraphique;
-
-import EnvironnementGraphique.FenetrePrincipale;
+package Vues.EnvironnementGraphique;
 
 import java.io.IOException;
-
-import Controleur.ControlVueTranslation;
 
 public class RunApplication {
 

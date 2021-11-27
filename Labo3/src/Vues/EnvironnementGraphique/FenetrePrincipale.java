@@ -1,4 +1,4 @@
-package EnvironnementGraphique;
+package Vues.EnvironnementGraphique;
 
 import Vues.DeuxiemeVue;
 import Vues.PremiereVue;
@@ -6,24 +6,22 @@ import Vues.TroisiemeVue;
 
 import javax.swing.*;
 
-import Controleur.ControlVueTranslation;
-
 import java.awt.*;
 import java.io.IOException;
 
 public class FenetrePrincipale extends JFrame {
     /**
-     * CRÉATION DE LA FENÊTRE PRINCIPALE
+     * CRï¿½ATION DE LA FENï¿½TRE PRINCIPALE
      */
     //Attributs
-    private static final String TITRE = "Laboratoire3 - Fenêtre principale";
+    private static final String TITRE = "Laboratoire3 - Fenï¿½tre principale";
     private static final Dimension DIMENSION = new Dimension(1400,840);
     public static PremiereVue vue1;
     public FenetrePrincipale() throws IOException {
 
         PanneauPrincipal pan = new PanneauPrincipal();
         setContentPane(pan);
-        //L'on passe la fenêtre principale à sauvegarder en paramètre dans Menu
+        //L'on passe la fenï¿½tre principale ï¿½ sauvegarder en paramï¿½tre dans Menu
          vue1 = new PremiereVue();
         DeuxiemeVue vue2 = new DeuxiemeVue();
         TroisiemeVue vue3 = new TroisiemeVue();
@@ -41,7 +39,7 @@ public class FenetrePrincipale extends JFrame {
 
         setTitle(TITRE);
         setSize(DIMENSION);
-        // Centrer la fenêtre
+        // Centrer la fenï¿½tre
         setLocationRelativeTo(null);
         // Redimensionnement impossible
         setResizable(false);

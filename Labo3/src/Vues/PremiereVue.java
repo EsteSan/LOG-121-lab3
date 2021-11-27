@@ -9,6 +9,7 @@ import Modele.ImageLabel;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.sql.Connection;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -39,12 +40,13 @@ public class PremiereVue extends JPanel implements java.io.Serializable{
         setBackground(COLOR);
         setVisible(true);
         setBorder(BorderFactory.createTitledBorder("VUE_ZOOM"));
-        addMouseMotionListener(new ControlVueZoom(this));
+        ControlVueZoom controlVueZoom=new ControlVueZoom(this);
+        addMouseListener(controlVueZoom);
+        addMouseMotionListener(controlVueZoom);
         add(lab);
     }
-    public void addImage(Image2 image) {
-        Image img=image.getImage();
-        lab.setImage(img);
+    public void addImage(ImageIcon image) {
+        lab.setImage(image);
     }
     
     public void setPositionLab(float x, float y){

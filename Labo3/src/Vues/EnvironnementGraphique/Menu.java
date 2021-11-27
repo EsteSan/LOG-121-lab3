@@ -1,5 +1,6 @@
-package EnvironnementGraphique;
+package Vues.EnvironnementGraphique;
 
+import Controleur.GestionnaireOperation;
 import Vues.DeuxiemeVue;
 import Vues.PremiereVue;
 import Vues.TroisiemeVue;
@@ -13,11 +14,10 @@ import Modele.Image2;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
-import javax.swing.filechooser.FileFilter;
 
 public class Menu extends JMenuBar {
     /**
-     * Création de la barre de menu et de ses éléments
+     * Crï¿½ation de la barre de menu et de ses ï¿½lï¿½ments
      */
     //Attributs
     private static final int X = 0;
@@ -30,7 +30,6 @@ public class Menu extends JMenuBar {
     private static final String MENU_COMMANDE_TITRE = "Commande";
     private static final String MENU_COMMANDE_UNDO = "Undo";
     private static final String MENU_COMMANDE_REDO = "Redo";
-    Image2 image2;
 
     public Menu(JFrame frame, PremiereVue vue1, DeuxiemeVue vue2, TroisiemeVue vue3){
 
@@ -43,7 +42,7 @@ public class Menu extends JMenuBar {
     }
 
     /**
-     * Création du menu fichier
+     * Crï¿½ation du menu fichier
      * @param frame
      */
     private void ajouterMenuFichier(JFrame frame,PremiereVue vue1, DeuxiemeVue vue2, TroisiemeVue vue3){
@@ -53,25 +52,23 @@ public class Menu extends JMenuBar {
         JMenuItem charger = new JMenuItem(MENU_FICHIER_CHARGER);
         JFileChooser fileChooser =new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         /**
-         * POUR INSÉRER UNE NOUVELLE IMAGE
+         * POUR INSï¿½RER UNE NOUVELLE IMAGE
          */
         nouvelleImage.addActionListener((ActionEvent e)->{
-        
-            ImageIcon image;
+
             fileChooser.setDialogTitle("Choisissez une image");
             fileChooser.setAcceptAllFileFilterUsed(false);
-            //Création d'un filtre
+            //Crï¿½ation d'un filtre
             FileNameExtensionFilter filtre = new FileNameExtensionFilter(".jpg", "jpg");
             fileChooser.addChoosableFileFilter(filtre);
 
             int returnValue = fileChooser.showOpenDialog(null);
             if (returnValue == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
-                image = new ImageIcon(selectedFile.getAbsolutePath());
-                 image2 = new Image2(selectedFile.getAbsolutePath());
-                vue1.addImage(image2);
-                vue2.addImage(image2);
-                vue3.addImage(image2);
+                ImageIcon image = new ImageIcon(selectedFile.getAbsolutePath());
+                vue2.addImage(image);
+                vue1.addImage(image);
+                vue3.addImage(image);
             }
         });
 
@@ -80,7 +77,7 @@ public class Menu extends JMenuBar {
          */
         sauvegarder.addActionListener((ActionEvent e) ->{
             fileChooser.setDialogTitle("Sauvegarder");
-            //Sérialisation
+            //Sï¿½rialisation
             try {
                 FileOutputStream fileOut= new FileOutputStream("C:\\Users\\Public\\Sauvegarde.ser");
                 ObjectOutputStream out= new ObjectOutputStream(fileOut);
@@ -102,7 +99,7 @@ public class Menu extends JMenuBar {
          */
         charger.addActionListener((ActionEvent e) ->{
             /*fileChooser.setDialogTitle("Charger");
-            //Dérialisation
+            //Dï¿½rialisation
             try {
                 FileInputStream fileIn= new FileInputStream("C:\\Users\\Public\\Sauvegarde.ser");
                 ObjectInputStream out= new ObjectInputStream(fileIn);
@@ -119,7 +116,7 @@ public class Menu extends JMenuBar {
             }*/
         });
         /**
-         * Implémenter les actions listener
+         * Implï¿½menter les actions listener
          */
 
         menuFichier.add(nouvelleImage);
@@ -130,17 +127,19 @@ public class Menu extends JMenuBar {
     }
 
     /**
-     * Création du menu commande
+     * Crï¿½ation du menu commande
      */
     private void ajouterMenuCommande(){
         JMenu menuCommande = new JMenu(MENU_COMMANDE_TITRE);
         JMenuItem undo = new JMenuItem(MENU_COMMANDE_UNDO);
         JMenuItem redo = new JMenuItem(MENU_COMMANDE_REDO);
 
-        /**
-         * Implémenter les actions listener
-         */
-
+        undo.addActionListener((ActionEvent e) ->{
+            GestionnaireOperation.getInstance().undo();
+        });
+        redo.addActionListener((ActionEvent e) ->{
+            GestionnaireOperation.getInstance().redo();
+        });
         menuCommande.add(undo);
         menuCommande.add(redo);
 

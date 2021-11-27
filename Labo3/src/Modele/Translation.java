@@ -1,13 +1,15 @@
 package Modele;
 
 import Controleur.ControlVueTranslation;
-import EnvironnementGraphique.FenetrePrincipale;
-import Vues.DeuxiemeVue;
-import Vues.PremiereVue;
 
 public class Translation implements Operation{
     boolean etat =false;
-    public int getPosX() {
+	ImageLabel label;
+	public Translation(ImageLabel imageLabel) {
+		label=imageLabel;
+	}
+
+	public int getPosX() {
 		return posX;
 	}
 
@@ -26,24 +28,23 @@ public class Translation implements Operation{
 	int posX;
     int posY;
     ControlVueTranslation control;
-    
-    //Translater
-   public void execute(DeuxiemeVue vue){
 
-	  vue.lab.setLocation(posX, posY);
-	   System.out.print("clicl");
-
-    }
 
 	@Override
 	public void execute() {
-
+		System.out.println(label.getX()+","+label.getY());
+		label.setLocation(label.getX()+posX, label.getY()+posY);
 	}
 
 	@Override
     public void undo() {
 
     }
+
+	@Override
+	public void redo() {
+
+	}
 
 
 }
