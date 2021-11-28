@@ -30,6 +30,8 @@ public class DeuxiemeVue extends JPanel implements java.io.Serializable{
     public int py;
     public ImageLabel lab=new ImageLabel();
     public DeuxiemeVue() {
+        setLayout(null);
+        Insets insets = getInsets();
         setBounds(X,Y,LARGEUR,HAUTEUR);
         setBackground(COLOR);
         setVisible(true);
@@ -37,6 +39,7 @@ public class DeuxiemeVue extends JPanel implements java.io.Serializable{
         ControlVueTranslation controlVueTranslation=new ControlVueTranslation(this);
         addMouseListener(controlVueTranslation);
         addMouseMotionListener(controlVueTranslation);
+        lab.setBounds(50+insets.left,30+insets.right,300,300);
         add(lab);
     }
 

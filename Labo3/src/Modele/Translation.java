@@ -32,18 +32,18 @@ public class Translation implements Operation{
 
 	@Override
 	public void execute() {
-		System.out.println(label.getX()+","+label.getY());
 		label.setLocation(label.getX()+posX, label.getY()+posY);
 	}
 
 	@Override
     public void undo() {
 
+		label.setLocation(label.getX()-posX, label.getY()-posY);
     }
 
 	@Override
 	public void redo() {
-
+execute();
 	}
 
 
