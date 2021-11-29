@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="CompilerConfiguration">
+    <option name="DEFAULT_COMPILER" value="Eclipse" />
+  </component>
+  <component name="EclipseCompilerSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="LOG-121-lab3" options="" />
+    </option>
+  </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="LOG-121-lab3" options="--add-modules java.desktop,java.base" />
