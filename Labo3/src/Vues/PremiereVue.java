@@ -50,7 +50,16 @@ public class PremiereVue extends JPanel{
     public void addImage(ImageIcon image) {
         lab.setImage(image);
     }
-    
+    public ImageLabel getLab() {
+        return lab;
+    }
+
+    public void setLab(ImageLabel lab_p) {
+        remove(lab);
+        this.lab = lab_p;
+        add(lab);
+        repaint();
+    }
     public void setPositionLab(float x, float y){
         lab.setAlignmentX(x);
         lab.setAlignmentY(y);

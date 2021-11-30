@@ -22,11 +22,11 @@ public class ControlVueZoom implements MouseMotionListener, MouseListener {
 
     public ControlVueZoom(PremiereVue p_vue) {
         vue =p_vue;
-        gestionnaireOperation=GestionnaireOperation.getInstance();
     }
 
     public void changerZoom() {
         if(vue!=null && vue.lab!=null){
+            gestionnaireOperation=GestionnaireOperation.getInstance();
             size_mod_x=px-pressed_x;
             size_mod_y=py-pressed_y;
             gestionnaireOperation.zoom(vue.lab,size_mod_x,size_mod_y);
@@ -63,6 +63,7 @@ public class ControlVueZoom implements MouseMotionListener, MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        gestionnaireOperation=GestionnaireOperation.getInstance();
         pressed_x=e.getX();
         pressed_y=e.getY();
         gestionnaireOperation.addZoom(vue.lab,pressed_x-memento_x,pressed_y-memento_y);

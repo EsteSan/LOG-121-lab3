@@ -39,10 +39,20 @@ public class DeuxiemeVue extends JPanel{
         ControlVueTranslation controlVueTranslation=new ControlVueTranslation(this);
         addMouseListener(controlVueTranslation);
         addMouseMotionListener(controlVueTranslation);
-        lab.setBounds(50+insets.left,30+insets.right,300,300);
+        lab.setBounds(50+insets.left,23+insets.right,300,300);
         add(lab);
     }
 
+    public ImageLabel getLab() {
+        return lab;
+    }
+
+    public void setLab(ImageLabel lab_p) {
+        remove(lab);
+        this.lab = lab_p;
+        add(lab);
+        repaint();
+    }
 
     public void addImage(ImageIcon image) {
         lab.setImage(image);

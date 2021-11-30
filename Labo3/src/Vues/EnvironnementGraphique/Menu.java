@@ -31,13 +31,13 @@ public class Menu extends JMenuBar {
     private static final String MENU_COMMANDE_TITRE = "Commande";
     private static final String MENU_COMMANDE_UNDO = "Undo";
     private static final String MENU_COMMANDE_REDO = "Redo";
-
+    Sauvegarde sauve=new Sauvegarde();
     public Menu(JFrame frame, PremiereVue vue1, DeuxiemeVue vue2, TroisiemeVue vue3, Sauvegarde sauve){
 
         setAlignmentX(0);
         setAlignmentY(0);
         setSize(DIMENSION);
-        ajouterMenuFichier(frame,vue1,vue2,vue3,sauve);
+        ajouterMenuFichier(frame,vue1,vue2,vue3);
         ajouterMenuCommande();
 
     }
@@ -46,7 +46,7 @@ public class Menu extends JMenuBar {
      * Cr�ation du menu fichier
      * @param frame
      */
-    private void ajouterMenuFichier(JFrame frame,PremiereVue vue1, DeuxiemeVue vue2, TroisiemeVue vue3, Sauvegarde sauve){
+    private void ajouterMenuFichier(JFrame frame,PremiereVue vue1, DeuxiemeVue vue2, TroisiemeVue vue3){
         JMenu menuFichier = new JMenu(MENU_FICHIER_TITRE);
         JMenuItem nouvelleImage = new JMenuItem(MENU_FICHIER_NOUVELLE_IMAGE);
         JMenuItem sauvegarder = new JMenuItem(MENU_FICHIER_SAUVEGARDER);
@@ -56,7 +56,7 @@ public class Menu extends JMenuBar {
          * POUR INS�RER UNE NOUVELLE IMAGE
          */
         nouvelleImage.addActionListener((ActionEvent e)->{
-
+            fileChooser.resetChoosableFileFilters();
             fileChooser.setDialogTitle("Choisissez une image");
             fileChooser.setAcceptAllFileFilterUsed(false);
             //Cr�ation d'un filtre
@@ -67,6 +67,10 @@ public class Menu extends JMenuBar {
             if (returnValue == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = fileChooser.getSelectedFile();
                 ImageIcon image = new ImageIcon(selectedFile.getAbsolutePath());
+                GestionnaireOperation.reset();
+                vue1.lab.reset();
+                vue2.lab.reset();
+                vue3.lab.reset();
                 vue2.addImage(image);
                 vue1.addImage(image);
                 sauve.setPath(selectedFile.getAbsolutePath());
@@ -78,8 +82,16 @@ public class Menu extends JMenuBar {
          * POUR SAUVEGARDER
          */
         sauvegarder.addActionListener((e) -> {
+            fileChooser.resetChoosableFileFilters();
             fileChooser.setDialogTitle("Sauvegarder");
+            FileNameExtensionFilter filtre = new FileNameExtensionFilter(".ser", "ser");
+            fileChooser.addChoosableFileFilter(filtre);
             int returnValue = fileChooser.showSaveDialog((Component)null);
+            sauve.setZoom(vue1.lab);
+            sauve.setTranslation(vue2.lab);
+            sauve.setOriginal(vue3.lab);
+            sauve.setGestionnaireOperation(GestionnaireOperation.getInstance());
+            System.out.println(sauve);
             if (returnValue == 0) {
                 File fileToSave = fileChooser.getSelectedFile();
 
@@ -101,22 +113,33 @@ public class Menu extends JMenuBar {
          * POUR CHARGER
          */
         charger.addActionListener((ActionEvent e) ->{
+            fileChooser.resetChoosableFileFilters();
             fileChooser.setDialogTitle("Charger un fichier");
             fileChooser.setAcceptAllFileFilterUsed(false);
             //Cr�ation d'un filtre
             FileNameExtensionFilter filtre = new FileNameExtensionFilter(".ser", "ser");
             fileChooser.addChoosableFileFilter(filtre);
 
+
             int returnValue = fileChooser.showOpenDialog(null);
             if (returnValue == JFileChooser.APPROVE_OPTION) {
-                Sauvegarde sauvegarde=null;
                 File selectedFile = fileChooser.getSelectedFile();
                 FileInputStream fileIn = null;
                 try {
                     fileIn = new FileInputStream(selectedFile.getAbsolutePath());
                     ObjectInputStream in = new ObjectInputStream(fileIn);
-                    sauvegarde = (Sauvegarde) in.readObject();
-                    vue1.setContenu(sauvegarde.getPath());
+                    sauve = (Sauvegarde) in.readObject();
+                    GestionnaireOperation.setInstance(sauve.getGestionnaireOperation());
+                    vue1.setLab(sauve.getZoom());
+                    vue2.setLab(sauve.getTranslation());
+                    vue3.setLab(sauve.getOriginal());
+                    System.out.println(sauve);
+                    System.out.println(sauve.getPath());
+                    ImageIcon image = new ImageIcon(sauve.getPath());
+                    vue2.addImage(image);
+                    vue1.addImage(image);
+                    sauve.setPath(sauve.getPath());
+                    vue3.addImage(image);
                 } catch (FileNotFoundException ex) {
                     ex.printStackTrace();
                 } catch (IOException ioException) {

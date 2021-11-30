@@ -13,7 +13,7 @@ public class ControlVueTranslation  implements MouseMotionListener, MouseListene
 	private int px;
 	private int py;
 	private int pressed_x,pressed_y,memento_x,memento_y;
-	private GestionnaireOperation gestionnaireOperation=GestionnaireOperation.getInstance();
+	private GestionnaireOperation gestionnaireOperation;
 
 	public ControlVueTranslation(DeuxiemeVue p_vue) {
 		
@@ -22,6 +22,7 @@ public class ControlVueTranslation  implements MouseMotionListener, MouseListene
 
 public void changerPosition() {
 		if(vue!=null && vue.lab!=null){
+			gestionnaireOperation=GestionnaireOperation.getInstance();
 			gestionnaireOperation.translate(vue.lab,px-pressed_x,py-pressed_y);
 			pressed_y=py;
 			pressed_x=px;
@@ -56,6 +57,7 @@ public void changerPosition() {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		gestionnaireOperation=GestionnaireOperation.getInstance();
 		pressed_x=e.getX();
 		pressed_y=e.getY();
 		gestionnaireOperation.addTranslation(vue.lab,pressed_x-memento_x,pressed_y-memento_y);

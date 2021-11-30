@@ -5,29 +5,37 @@ import Modele.Operation;
 import Modele.Translation;
 import Modele.Zoom;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-public class GestionnaireOperation {
+public class GestionnaireOperation implements Serializable {
     private LinkedList<Operation> operations;
-    private static boolean created=false;
+
     private static GestionnaireOperation instance;
     private int size=0;
     private int current=0;
-    ListIterator<Operation> it;
+    transient ListIterator<Operation> it;
     private GestionnaireOperation(){
         operations=new LinkedList<>();
 
     }
     public static GestionnaireOperation getInstance(){
-        if(!created){
+        if(instance==null){
             instance= new GestionnaireOperation();
-            created=true;
         }
         return instance;
     }
+    public static void setInstance(GestionnaireOperation gestionnaireOperation){
+        instance= gestionnaireOperation;
+    }
+
+    public static void reset() {
+        instance=new GestionnaireOperation();
+    }
+
     public void zoom(ImageLabel imageLabel,int size_x,int size_y){
         Zoom zoom=new Zoom(imageLabel);
         zoom.setModification_x(size_x);
@@ -91,5 +99,12 @@ public class GestionnaireOperation {
         current=size++;
         it=operations.listIterator(current);
         System.out.println(operations);
+    }
+
+    @Override
+    public String toString() {
+        return "GestionnaireOperation{" +
+                "operations=" + operations +
+                '}';
     }
 }
