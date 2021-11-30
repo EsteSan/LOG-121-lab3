@@ -3,7 +3,7 @@ package Modele;
 import javax.swing.*;
 import java.awt.*;
 
-public class ImageLabel extends JLabel {
+public class ImageLabel extends JLabel implements java.io.Serializable {
 
     Image image;
 

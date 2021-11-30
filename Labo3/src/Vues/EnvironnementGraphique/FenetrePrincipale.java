@@ -1,5 +1,6 @@
 package Vues.EnvironnementGraphique;
 
+import Modele.Sauvegarde;
 import Vues.DeuxiemeVue;
 import Vues.PremiereVue;
 import Vues.TroisiemeVue;
@@ -19,6 +20,7 @@ public class FenetrePrincipale extends JFrame {
     public static PremiereVue vue1;
     public FenetrePrincipale() throws IOException {
 
+        Sauvegarde sauve= new Sauvegarde();
         PanneauPrincipal pan = new PanneauPrincipal();
         setContentPane(pan);
         //L'on passe la fen�tre principale � sauvegarder en param�tre dans Menu
@@ -28,7 +30,7 @@ public class FenetrePrincipale extends JFrame {
         
 
        
-        Menu menu = new Menu(this,vue1,vue2,vue3);
+        Menu menu = new Menu(this,vue1,vue2,vue3,sauve);
 
         //Ajout de la barre de menu dans le panneau
         pan.add(menu);

@@ -1,6 +1,7 @@
 package Vues.EnvironnementGraphique;
 
 import Controleur.GestionnaireOperation;
+import Modele.Sauvegarde;
 import Vues.DeuxiemeVue;
 import Vues.PremiereVue;
 import Vues.TroisiemeVue;
@@ -31,12 +32,12 @@ public class Menu extends JMenuBar {
     private static final String MENU_COMMANDE_UNDO = "Undo";
     private static final String MENU_COMMANDE_REDO = "Redo";
 
-    public Menu(JFrame frame, PremiereVue vue1, DeuxiemeVue vue2, TroisiemeVue vue3){
+    public Menu(JFrame frame, PremiereVue vue1, DeuxiemeVue vue2, TroisiemeVue vue3, Sauvegarde sauve){
 
         setAlignmentX(0);
         setAlignmentY(0);
         setSize(DIMENSION);
-        ajouterMenuFichier(frame,vue1,vue2,vue3);
+        ajouterMenuFichier(frame,vue1,vue2,vue3,sauve);
         ajouterMenuCommande();
 
     }
@@ -45,7 +46,7 @@ public class Menu extends JMenuBar {
      * Cr�ation du menu fichier
      * @param frame
      */
-    private void ajouterMenuFichier(JFrame frame,PremiereVue vue1, DeuxiemeVue vue2, TroisiemeVue vue3){
+    private void ajouterMenuFichier(JFrame frame,PremiereVue vue1, DeuxiemeVue vue2, TroisiemeVue vue3, Sauvegarde sauve){
         JMenu menuFichier = new JMenu(MENU_FICHIER_TITRE);
         JMenuItem nouvelleImage = new JMenuItem(MENU_FICHIER_NOUVELLE_IMAGE);
         JMenuItem sauvegarder = new JMenuItem(MENU_FICHIER_SAUVEGARDER);
@@ -68,6 +69,7 @@ public class Menu extends JMenuBar {
                 ImageIcon image = new ImageIcon(selectedFile.getAbsolutePath());
                 vue2.addImage(image);
                 vue1.addImage(image);
+                sauve.setPath(selectedFile.getAbsolutePath());
                 vue3.addImage(image);
             }
         });
@@ -75,49 +77,55 @@ public class Menu extends JMenuBar {
         /**
          * POUR SAUVEGARDER
          */
-        sauvegarder.addActionListener((ActionEvent e) ->{
+        sauvegarder.addActionListener((e) -> {
             fileChooser.setDialogTitle("Sauvegarder");
-            //S�rialisation
-            try {
-                FileOutputStream fileOut= new FileOutputStream("C:\\Users\\Public\\Sauvegarde.ser");
-                ObjectOutputStream out= new ObjectOutputStream(fileOut);
-                out.writeObject(frame);
-                out.close();
-                fileOut.close();
-            }  catch (IOException i) {
-                i.printStackTrace();
-            }
-            int returnValue = fileChooser.showSaveDialog(frame);
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
+            int returnValue = fileChooser.showSaveDialog((Component)null);
+            if (returnValue == 0) {
                 File fileToSave = fileChooser.getSelectedFile();
-                System.out.println("Sauvegarder comme: " + fileToSave.getAbsolutePath());
+
+                try {
+                    FileOutputStream fileOut = new FileOutputStream(fileToSave.getPath() + ".ser");
+                    ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                    out.writeObject(sauve);
+                    out.flush();
+                    out.close();
+                    fileOut.close();
+                } catch (IOException var7) {
+                    var7.printStackTrace();
+                }
             }
+
         });
 
         /**
          * POUR CHARGER
          */
         charger.addActionListener((ActionEvent e) ->{
-            /*fileChooser.setDialogTitle("Charger");
-            //D�rialisation
-            try {
-                FileInputStream fileIn= new FileInputStream("C:\\Users\\Public\\Sauvegarde.ser");
-                ObjectInputStream out= new ObjectInputStream(fileIn);
-                out.writeObject(frame);
-                out.close();
-                fileOut.close();
-            }  catch (IOException i) {
-                i.printStackTrace();
-            }
-            int returnValue = fileChooser.showSaveDialog(frame);
+            fileChooser.setDialogTitle("Charger un fichier");
+            fileChooser.setAcceptAllFileFilterUsed(false);
+            //Cr�ation d'un filtre
+            FileNameExtensionFilter filtre = new FileNameExtensionFilter(".ser", "ser");
+            fileChooser.addChoosableFileFilter(filtre);
+
+            int returnValue = fileChooser.showOpenDialog(null);
             if (returnValue == JFileChooser.APPROVE_OPTION) {
-                File fileToSave = fileChooser.getSelectedFile();
-                System.out.println("Sauvegarder comme: " + fileToSave.getAbsolutePath());
-            }*/
+                Sauvegarde sauvegarde=null;
+                File selectedFile = fileChooser.getSelectedFile();
+                FileInputStream fileIn = null;
+                try {
+                    fileIn = new FileInputStream(selectedFile.getAbsolutePath());
+                    ObjectInputStream in = new ObjectInputStream(fileIn);
+                    sauvegarde = (Sauvegarde) in.readObject();
+                    vue1.setContenu(sauvegarde.getPath());
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (ClassNotFoundException classNotFoundException) {
+                    classNotFoundException.printStackTrace();
+                }
+            }
         });
-        /**
-         * Impl�menter les actions listener
-         */
 
         menuFichier.add(nouvelleImage);
         menuFichier.add(sauvegarder);

@@ -8,7 +8,7 @@ import Modele.ImageLabel;
 
 import java.awt.*;
 
-public class TroisiemeVue extends JPanel implements java.io.Serializable{
+public class TroisiemeVue extends JPanel{
 
     /**
      * Cr�ation de la premi�re vue

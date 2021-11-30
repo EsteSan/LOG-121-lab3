@@ -5,6 +5,7 @@ package Vues;
 import Controleur.ControlVueZoom;
 import Modele.Image2;
 import Modele.ImageLabel;
+import Modele.Sauvegarde;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -16,7 +17,7 @@ import javax.swing.JPanel;
 
 
 import javax.swing.*;
-public class PremiereVue extends JPanel implements java.io.Serializable{
+public class PremiereVue extends JPanel{
 
     /**
      * Cr�ation de la premi�re vue
@@ -28,6 +29,7 @@ public class PremiereVue extends JPanel implements java.io.Serializable{
     private static final int HAUTEUR = 300;
     private static final Dimension DIMENSION = new Dimension(400,300);
     private static final Color COLOR = Color.WHITE;
+    private Sauvegarde sauv= new Sauvegarde();
     
 
     public int px;
@@ -52,5 +54,14 @@ public class PremiereVue extends JPanel implements java.io.Serializable{
     public void setPositionLab(float x, float y){
         lab.setAlignmentX(x);
         lab.setAlignmentY(y);
+    }
+    public Sauvegarde getSauv(){
+        return this.sauv;
+    }
+    public void setContenu(String path){
+        removeAll();
+        add(lab);
+        ImageIcon im = new ImageIcon(path);
+        addImage(im);
     }
 }

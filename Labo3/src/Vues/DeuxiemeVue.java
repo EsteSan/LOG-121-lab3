@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class DeuxiemeVue extends JPanel implements java.io.Serializable{
+public class DeuxiemeVue extends JPanel{
 
     /**
      * Cr�ation de la premi�re vue
