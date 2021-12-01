@@ -80,7 +80,6 @@ public class ImageLabel extends JLabel implements Serializable {
     public void setImage(Image image_p) {
         yOriginale=getY();
         xOriginale=getX();
-        System.out.println(image_p);
         this.image=image_p;
         Image imgScale=image.getScaledInstance(width,height,Image.SCALE_SMOOTH);
         ImageIcon scaledIcon =new ImageIcon(imgScale);
@@ -115,7 +114,6 @@ public class ImageLabel extends JLabel implements Serializable {
     public void reset() {
         width=300;
         height=300;
-        System.out.println(xOriginale+","+yOriginale);
         setAlignmentX(xOriginale);
         setAlignmentY(yOriginale);
         setBounds(50,23,300,300);

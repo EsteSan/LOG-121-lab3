@@ -123,8 +123,6 @@ public class GestionnaireOperation implements Serializable {
             it.next().undo();
             it.previous();
             current=it.previousIndex();
-            System.out.println(current);
-            System.out.println(operations);
         }
     }
 
@@ -162,7 +160,6 @@ public class GestionnaireOperation implements Serializable {
         operations.add(op);
         current=size++;
         it=operations.listIterator(current);
-        System.out.println(operations);
     }
 
     /**

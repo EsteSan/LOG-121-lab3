@@ -94,7 +94,6 @@ public class Menu extends JMenuBar {
             sauve.setTranslation(vue2.lab);
             sauve.setOriginal(vue3.lab);
             sauve.setGestionnaireOperation(GestionnaireOperation.getInstance());
-            System.out.println(sauve);
             if (returnValue == 0) {
                 File fileToSave = fileChooser.getSelectedFile();
 
@@ -138,8 +137,6 @@ public class Menu extends JMenuBar {
                     vue1.setLab(sauve.getZoom());
                     vue2.setLab(sauve.getTranslation());
                     vue3.setLab(sauve.getOriginal());
-                    System.out.println(sauve);
-                    System.out.println(sauve.getPath());
                     ImageIcon image = new ImageIcon(sauve.getPath());
                     vue2.addImage(image);
                     vue1.addImage(image);
