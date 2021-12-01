@@ -16,9 +16,10 @@ import java.io.*;
 
 public class Menu extends JMenuBar {
     /**
-     * Cr�ation de la barre de menu et de ses �l�ments
+     * Creation de la barre de menu et de ses elements
      */
-    //Attributs
+
+    //ATTRIBUTS
     private static final int X = 0;
     private static final int Y = 0;
     private static final Dimension DIMENSION=new Dimension(1400,30);
@@ -51,13 +52,14 @@ public class Menu extends JMenuBar {
         JMenuItem charger = new JMenuItem(MENU_FICHIER_CHARGER);
         JFileChooser fileChooser =new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         /**
-         * POUR INS�RER UNE NOUVELLE IMAGE
+         * POUR INSERER UNE NOUVELLE IMAGE
          */
         nouvelleImage.addActionListener((ActionEvent e)->{
             fileChooser.resetChoosableFileFilters();
             fileChooser.setDialogTitle("Choisissez une image");
             fileChooser.setAcceptAllFileFilterUsed(false);
-            //Cr�ation d'un filtre
+
+            //Creation d'un filtre
             FileNameExtensionFilter filtre = new FileNameExtensionFilter(".jpg", "jpg");
             fileChooser.addChoosableFileFilter(filtre);
 
@@ -71,8 +73,11 @@ public class Menu extends JMenuBar {
                 vue3.lab.reset();
                 vue2.addImage(image);
                 vue1.addImage(image);
-                sauve.setPath(selectedFile.getAbsolutePath());
                 vue3.addImage(image);
+
+                //Le chemin complet vers l'image est enregistré
+                sauve.setPath(selectedFile.getAbsolutePath());
+
             }
         });
 
@@ -114,7 +119,7 @@ public class Menu extends JMenuBar {
             fileChooser.resetChoosableFileFilters();
             fileChooser.setDialogTitle("Charger un fichier");
             fileChooser.setAcceptAllFileFilterUsed(false);
-            //Cr�ation d'un filtre
+            //Creation d'un filtre
             FileNameExtensionFilter filtre = new FileNameExtensionFilter(".ser", "ser");
             fileChooser.addChoosableFileFilter(filtre);
 
@@ -128,6 +133,8 @@ public class Menu extends JMenuBar {
                     ObjectInputStream in = new ObjectInputStream(fileIn);
                     sauve = (Sauvegarde) in.readObject();
                     GestionnaireOperation.setInstance(sauve.getGestionnaireOperation());
+
+                    //Les images qui ont été modifiees et enregistrees sont reouvertes
                     vue1.setLab(sauve.getZoom());
                     vue2.setLab(sauve.getTranslation());
                     vue3.setLab(sauve.getOriginal());
@@ -148,17 +155,21 @@ public class Menu extends JMenuBar {
             }
         });
 
+        //Ajout des elements du menu fichier
         menuFichier.add(nouvelleImage);
         menuFichier.add(sauvegarder);
         menuFichier.add(charger);
 
+        //Ajout du menu ficheir a la barre de menu
         add(menuFichier);
     }
 
     /**
-     * Cr�ation du menu commande
+     * Creation du menu commande
      */
     private void ajouterMenuCommande(){
+
+        //Creation des elements du menu commande
         JMenu menuCommande = new JMenu(MENU_COMMANDE_TITRE);
         JMenuItem undo = new JMenuItem(MENU_COMMANDE_UNDO);
         JMenuItem redo = new JMenuItem(MENU_COMMANDE_REDO);
@@ -172,6 +183,7 @@ public class Menu extends JMenuBar {
         menuCommande.add(undo);
         menuCommande.add(redo);
 
+        //Ajout du menu commande a la barre de menu
         add(menuCommande);
     }
 

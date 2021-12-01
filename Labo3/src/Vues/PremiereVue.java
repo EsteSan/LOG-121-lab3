@@ -15,23 +15,18 @@ import javax.swing.*;
 public class PremiereVue extends JPanel{
 
     /**
-     * Cr�ation de la premi�re vue
+     * CREATION DE LA PREMIERE VUE POUR LE ZOOM
      */
-    //attributs
+
+    //ATTRIBUTS
     private static final int X = 200;
     private static final int Y = 90;
     private static final int LARGEUR = 400;
     private static final int HAUTEUR = 300;
-    private static final Dimension DIMENSION = new Dimension(400,300);
     private static final Color COLOR = Color.WHITE;
-    private Sauvegarde sauv= new Sauvegarde();
-    
-
-    public int px;
-    public int py;
     public ImageLabel lab=new ImageLabel();
 
-
+    //CONSTRUCTEUR
     public PremiereVue(){
         setBounds(X,Y,LARGEUR,HAUTEUR);
         setBackground(COLOR);
@@ -42,30 +37,23 @@ public class PremiereVue extends JPanel{
         addMouseMotionListener(controlVueZoom);
         add(lab);
     }
+
+    /**
+     * Ajoute une image a un JLabel
+     * @param image, de type ImageIcon
+     */
     public void addImage(ImageIcon image) {
         lab.setImage(image);
     }
-    public ImageLabel getLab() {
-        return lab;
-    }
 
+    /**
+     * Permet de redéfinir un component du panneau de type JLabel
+     * @param lab_p, de type ImageLabel
+     */
     public void setLab(ImageLabel lab_p) {
         remove(lab);
         this.lab = lab_p;
         add(lab);
         repaint();
-    }
-    public void setPositionLab(float x, float y){
-        lab.setAlignmentX(x);
-        lab.setAlignmentY(y);
-    }
-    public Sauvegarde getSauv(){
-        return this.sauv;
-    }
-    public void setContenu(String path){
-        removeAll();
-        add(lab);
-        ImageIcon im = new ImageIcon(path);
-        addImage(im);
     }
 }

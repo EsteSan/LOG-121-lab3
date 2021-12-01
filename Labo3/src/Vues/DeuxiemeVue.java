@@ -9,18 +9,18 @@ import java.awt.*;
 public class DeuxiemeVue extends JPanel{
 
     /**
-     * Cr�ation de la premi�re vue
+     * CREATION DE LA DEUXIEME VUE POUR LA TRANSLATION
      */
-    //attributs
+
+    //ATTRIBUTS
     private static final int X=800;
     private static final int Y=90;
     private static final int LARGEUR = 400;
     private static final int HAUTEUR = 300;
     private static final Color COLOR= Color.WHITE;
-
-    public int px;
-    public int py;
     public ImageLabel lab=new ImageLabel();
+
+    //CONSTRUCTEUR
     public DeuxiemeVue() {
         setLayout(null);
         Insets insets = getInsets();
@@ -35,10 +35,11 @@ public class DeuxiemeVue extends JPanel{
         add(lab);
     }
 
-    public ImageLabel getLab() {
-        return lab;
-    }
 
+    /**
+     * Permet de redéfinir un component du panneau de type JLabel
+     * @param lab_p, de type ImageLabel
+     */
     public void setLab(ImageLabel lab_p) {
         remove(lab);
         this.lab = lab_p;
@@ -46,6 +47,10 @@ public class DeuxiemeVue extends JPanel{
         repaint();
     }
 
+    /**
+     * Ajoute une image a un JLabel
+     * @param image, de type ImageIcon
+     */
     public void addImage(ImageIcon image) {
         lab.setImage(image);
     }
