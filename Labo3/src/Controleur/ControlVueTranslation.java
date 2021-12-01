@@ -5,7 +5,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import Vues.DeuxiemeVue;
-
+/**
+ *
+ * **/
 public class ControlVueTranslation  implements MouseMotionListener, MouseListener {
 	
 	
@@ -19,16 +21,25 @@ public class ControlVueTranslation  implements MouseMotionListener, MouseListene
 		
 		vue =p_vue;
 	}
+	/**
+	 * Permet de Changer la position de l'image voulue
+	 * **/
+	public void changerPosition() {
+			if(vue!=null && vue.lab!=null){
+				gestionnaireOperation=GestionnaireOperation.getInstance();
+				gestionnaireOperation.translate(vue.lab,px-pressed_x,py-pressed_y);
+				pressed_y=py;
+				pressed_x=px;
+			}
+	}
 
-public void changerPosition() {
-		if(vue!=null && vue.lab!=null){
-			gestionnaireOperation=GestionnaireOperation.getInstance();
-			gestionnaireOperation.translate(vue.lab,px-pressed_x,py-pressed_y);
-			pressed_y=py;
-			pressed_x=px;
-		}
-}
-
+	/**
+	 * Permet de réagir lorsque la souris tire dans la fenêtre que le controlleur observe.
+	 *
+	 * @param e L'évènement dans l'observé qui déclenche l'action. Contient les informations, comme la position de
+	 *            la souris, nécessaires aux traitements
+	 *
+	 * **/
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		//creer une nouvelle instance de Zoom  pour envoyer au controleur
@@ -47,6 +58,12 @@ public void changerPosition() {
 
 	}
 
+	/**
+	 * Permet de savoir le point de départ dans la vue de l'action de translation.
+	 *
+	 * @param e L'évènement dans l'observé qui déclenche l'action. Contient les informations, comme la position de
+	 *            la souris, nécessaires aux traitements
+	 * **/
 	@Override
 	public void mousePressed(MouseEvent e) {
 		pressed_x=e.getX();
@@ -55,6 +72,12 @@ public void changerPosition() {
 		memento_y=pressed_y;
 	}
 
+	/**
+	 * Permet de savoir lorsque l'opération est finie et de l'enregistrer dans le Gestionnaire d'Opération
+	 *
+	 * @param e L'évènement dans l'observé qui déclenche l'action. Contient les informations, comme la position de
+	 *            la souris, nécessaires aux traitements
+	 * **/
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		gestionnaireOperation=GestionnaireOperation.getInstance();

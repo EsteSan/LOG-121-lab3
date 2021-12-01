@@ -3,16 +3,11 @@ package Vues;
 
 
 import Controleur.ControlVueZoom;
-import Modele.Image2;
 import Modele.ImageLabel;
 import Modele.Sauvegarde;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
-import java.sql.Connection;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 

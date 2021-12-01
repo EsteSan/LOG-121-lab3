@@ -1,18 +1,10 @@
 package Vues;
 
 import Controleur.ControlVueTranslation;
-import Modele.Image2;
 import Modele.ImageLabel;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class DeuxiemeVue extends JPanel{
 

@@ -10,8 +10,6 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
-import Modele.Image2;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;

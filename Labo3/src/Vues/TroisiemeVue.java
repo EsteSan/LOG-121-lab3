@@ -2,8 +2,6 @@ package Vues;
 
 import javax.swing.*;
 
-import Controleur.ControlVueTranslation;
-import Modele.Image2;
 import Modele.ImageLabel;
 
 import java.awt.*;

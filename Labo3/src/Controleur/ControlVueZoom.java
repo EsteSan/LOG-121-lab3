@@ -24,6 +24,9 @@ public class ControlVueZoom implements MouseMotionListener, MouseListener {
         vue =p_vue;
     }
 
+    /**
+    * Fonction qui ajuste
+    * **/
     public void changerZoom() {
         if(vue!=null && vue.lab!=null){
             gestionnaireOperation=GestionnaireOperation.getInstance();
@@ -35,6 +38,13 @@ public class ControlVueZoom implements MouseMotionListener, MouseListener {
         }
     }
 
+    /**
+     * Permet de réagir lorsque la souris tire dans la fenêtre que le controlleur observe.
+     *
+     * @param e L'évènement dans l'observé qui déclenche l'action. Contient les informations, comme la position de
+     *            la souris, nécessaires aux traitements
+     *
+     * **/
     @Override
     public void mouseDragged(MouseEvent e) {
         //creer une nouvelle instance de Zoom  pour envoyer au controleur
@@ -53,6 +63,12 @@ public class ControlVueZoom implements MouseMotionListener, MouseListener {
 
     }
 
+    /**
+     * Permet de savoir le point de départ dans la vue de l'action de translation.
+     *
+     * @param e L'évènement dans l'observé qui déclenche l'action. Contient les informations, comme la position de
+     *            la souris, nécessaires aux traitements
+     * **/
     @Override
     public void mousePressed(MouseEvent e) {
         pressed_x=e.getX();
@@ -61,6 +77,12 @@ public class ControlVueZoom implements MouseMotionListener, MouseListener {
         memento_y=pressed_y;
     }
 
+    /**
+     * Permet de savoir lorsque l'opération est finie et de l'enregistrer dans le Gestionnaire d'Opération
+     *
+     * @param e L'évènement dans l'observé qui déclenche l'action. Contient les informations, comme la position de
+     *            la souris, nécessaires aux traitements
+     * **/
     @Override
     public void mouseReleased(MouseEvent e) {
         gestionnaireOperation=GestionnaireOperation.getInstance();
