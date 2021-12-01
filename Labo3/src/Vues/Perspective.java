@@ -1,7 +1,9 @@
-public class Perspective extends Image {
+package Vues;
+
+public class Perspective  {
 
     public Perspective(String pathImage) {
-        super(pathImage);
+        ;
     }
 
     int mulitplicateurZoom;
